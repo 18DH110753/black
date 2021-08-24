@@ -58,4 +58,4 @@ const OptionGroup = ({ name, direction, children }) => {
   );
 };
 
-export default OptionGroup;
+export { OptionGroup };

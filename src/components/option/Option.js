@@ -44,4 +44,4 @@ const Option = ({ children, optionalFunction }) => {
   );
 };
 
-export default Option;
+export  {Option};

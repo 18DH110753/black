@@ -1,6 +1,5 @@
 import React from "react";
-import OptionGroup from "./OptionGroup";
-import Option from "./Option";
+import { OptionGroup, Option } from "../components/option";
 
 export default {
   title: "OptionGroup",
