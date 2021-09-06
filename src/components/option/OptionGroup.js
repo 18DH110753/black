@@ -1,6 +1,10 @@
-import React, { useLayoutEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import "./OptionGroup.scss";
-import { RemoveActiveContext } from "../../hooks/useRemoveActiveContext.js";
+// import { RemoveActiveContext } from "../../hooks/useRemoveActiveContext";
+import {
+  createOptionGroup,
+  RemoveActiveContext,
+} from "../../hooks/createOption";
 
 const groupDirection = {
   row: {
@@ -18,38 +22,21 @@ const groupDirection = {
 };
 
 const OptionGroup = ({ name, direction, children }) => {
-  const [active, setActive] = useState();
-  const optionListRef = useRef();
   const direct = direction ? direction : "column";
-
-  const value = useMemo(
-    () => ({
-      active,
-      setActive,
-      optionListRef,
-    }),
-    [active, setActive, optionListRef]
-  );
-
-  // TODO: Turn this to a custom hook
-  useLayoutEffect(() => {
-    const firstChild = optionListRef.current.querySelector(".option");
-    firstChild && firstChild.classList.add("active");
-    firstChild && setActive(firstChild.textContent);
-  }, []);
+  const value = createOptionGroup();
 
   return (
     <RemoveActiveContext.Provider value={value}>
       <div className={"option-group"}>
         {name && (
           <div className={"option-name"}>
-            <strong>{name}:</strong> {active}
+            <strong>{name}:</strong> {value.active}
           </div>
         )}
         <div
           className={"option-list"}
           style={groupDirection[direct]}
-          ref={optionListRef}
+          ref={value.optionListRef}
         >
           {children}
         </div>

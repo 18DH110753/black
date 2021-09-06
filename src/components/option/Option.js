@@ -1,20 +1,25 @@
 import React, { useContext, useRef } from "react";
 import "./Option.scss";
-import { RemoveActiveContext } from "../../hooks/useRemoveActiveContext";
 import {
-  animateBackground,
+  animatedBackground,
   resetBackground,
   defaultOnClick,
-} from "../../hooks/useCreateOption";
+  RemoveActiveContext,
+  useOptionGroup,
+} from "../../hooks/createOption";
+// import { RemoveActiveContext } from "../../hooks/useRemoveActiveContext";
 
 const Option = ({ children, optionalFunction }) => {
+  // TODO: Do I need this for all option or just for some option
   const context = useContext(RemoveActiveContext);
+  // console.log(context);
 
   if (!context) {
     throw Error("Option component need to be wrapped in an OptionGroup");
   }
 
   const { setActive, optionListRef } = context;
+  // const { optionListRef } = useOptionGroup();
 
   const optionRef = useRef();
 
@@ -23,20 +28,21 @@ const Option = ({ children, optionalFunction }) => {
       <div
         className={"option"}
         ref={optionRef}
-        onClick={() =>
-          defaultOnClick(
-            setActive,
-            optionalFunction,
-            optionRef.current,
-            optionListRef.current
-          )
-        }
-        onMouseMove={(e) =>
-          animateBackground(e, optionRef.current, optionListRef.current)
-        }
-        onMouseLeave={() =>
-          resetBackground(optionRef.current, optionListRef.current)
-        }
+        onClick={() => {
+          defaultOnClick(optionRef.current);
+          Boolean(optionalFunction) ? optionalFunction() : "";
+          setActive(optionRef.current.textContent);
+        }}
+        onMouseMove={(e) => {
+          animatedBackground(e, optionRef.current);
+          animatedBackground(
+            e,
+            optionListRef.current, // element to animated background
+            optionRef.current.offsetWidth,
+            optionRef.current.offsetHeight
+          );
+        }}
+        onMouseLeave={() => resetBackground(optionRef.current)}
       >
         {children}
       </div>
@@ -44,4 +50,4 @@ const Option = ({ children, optionalFunction }) => {
   );
 };
 
-export  {Option};
+export { Option };
