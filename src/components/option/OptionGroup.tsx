@@ -1,12 +1,8 @@
-import React, { useMemo, useRef, useState } from "react";
+import React from "react";
 import "./OptionGroup.scss";
-// import { RemoveActiveContext } from "../../hooks/useRemoveActiveContext";
-import {
-  createOptionGroup,
-  RemoveActiveContext,
-} from "../../hooks/createOption";
+import { createGroup, RemoveActiveContext } from "../../hooks/createOption";
 
-const groupDirection = {
+const groupDirection: any = {
   row: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(100%, 1fr))",
@@ -21,9 +17,19 @@ const groupDirection = {
   },
 };
 
-const OptionGroup = ({ name, direction, children }) => {
+export interface OptionGroupProps {
+  name?: string;
+  direction?: string;
+  children?: JSX.Element;
+}
+
+const OptionGroup: React.FC<OptionGroupProps> = ({
+  name,
+  direction,
+  children,
+}) => {
   const direct = direction ? direction : "column";
-  const value = createOptionGroup();
+  const value = createGroup();
 
   return (
     <RemoveActiveContext.Provider value={value}>
@@ -36,7 +42,7 @@ const OptionGroup = ({ name, direction, children }) => {
         <div
           className={"option-list"}
           style={groupDirection[direct]}
-          ref={value.optionListRef}
+          ref={value.elementRef}
         >
           {children}
         </div>
@@ -45,4 +51,4 @@ const OptionGroup = ({ name, direction, children }) => {
   );
 };
 
-export { OptionGroup };
+export default OptionGroup;
