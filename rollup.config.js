@@ -2,7 +2,7 @@ import * as path from "path";
 import babel from "@rollup/plugin-babel";
 import resolve from "@rollup/plugin-node-resolve";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
-import scss from "rollup-plugin-scss";
+import sass from "rollup-plugin-sass";
 import pkg from "./package.json";
 import { terser } from "rollup-plugin-terser";
 
@@ -25,8 +25,8 @@ export default {
     resolve({
       extensions: EXTENSIONS,
     }),
-    scss({
-      output: false,
+    sass({
+      insert: true,
     }),
     babel({
       extensions: EXTENSIONS,

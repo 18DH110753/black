@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactChild, ReactChildren } from "react";
 import "./OptionGroup.scss";
 import { createGroup, RemoveActiveContext } from "../../hooks/createOption";
 
@@ -20,7 +20,7 @@ const groupDirection: any = {
 export interface OptionGroupProps {
   name?: string;
   direction?: string;
-  children?: JSX.Element;
+  children?: React.ReactNode;
 }
 
 const OptionGroup: React.FC<OptionGroupProps> = ({
