@@ -1,4 +1,4 @@
-import React, { ReactChild, ReactChildren } from "react";
+import React from "react";
 import "./OptionGroup.scss";
 import { createGroup, RemoveActiveContext } from "../../hooks/createOption";
 
@@ -32,6 +32,7 @@ const OptionGroup: React.FC<OptionGroupProps> = ({
   const value = createGroup();
 
   return (
+    // TODO: I want to wrap this inside a custom component
     <RemoveActiveContext.Provider value={value}>
       <div className={"option-group"}>
         {name && (
